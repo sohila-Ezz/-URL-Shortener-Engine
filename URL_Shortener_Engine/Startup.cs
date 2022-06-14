@@ -31,6 +31,22 @@ namespace URL_Shortener_Engine
         {
 
             services.AddControllers();
+            services.AddCors(options =>
+
+            {
+
+                options.AddPolicy(
+
+                name: "AllowOrigin",
+
+                builder => {
+
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+                });
+
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "URL_Shortener_Engine", Version = "v1" });
@@ -54,6 +70,7 @@ namespace URL_Shortener_Engine
             }
            
             app.UseHttpsRedirection();
+            app.UseCors("AllowOrigin");
 
             app.UseRouting();
 

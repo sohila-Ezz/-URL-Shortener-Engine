@@ -59,13 +59,14 @@ namespace URL_Shortener_Engine.Repository
             _context.SaveChanges();
              return short_Url;  
         }
-
         public Short_Url Update(int id, Short_Url item)
         {
             var Url = _context.ShortUrls.FirstOrDefault(x => x.Id == id);
-           
+            var slug = ShortId.Generate();
             Url.OriginalUrl = item.OriginalUrl;
-          
+            Url.ShortCode = slug;
+            Url.ShortUrl = $"{ServiceUrl}/{slug}";
+           
             _context.SaveChanges();
             return Url;
         }

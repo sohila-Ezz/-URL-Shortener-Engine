@@ -41,6 +41,39 @@ namespace URL_Shortener_Engine.Controllers
             return Ok(ShortUrl);
 
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateShort_UrlAsync(int id,  Short_Url short_Url)
+        {
+            var url = await _short_UrlRepository.GetById(id);
+            if (url == null)
+                return NotFound($"No URL was found with ID {id}");
+            else
+            {
+              url=_short_UrlRepository.Update(id, short_Url);
+               
+                return Ok(url);
+
+            }
+           
+          
+            
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            var url = await _short_UrlRepository.GetById(id);
+            if (url == null)
+                return NotFound($"No URL was found with ID {id}");
+            else
+            {
+               url= _short_UrlRepository.Delete(id);
+            }
+
+            return Ok(url);
+        }
+
 
     }
 }
